@@ -9,7 +9,11 @@ const profileRoutes = require('./routes/profile-routes')
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
+
+
+// static folder
+app.use( express.static("assets") );
 
 // set view engine
 app.set('view engine', 'ejs');
