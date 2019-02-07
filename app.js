@@ -3,10 +3,11 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const authRoutes = require('./routes/auth-routes');
 const mongoose = require('mongoose');
-const keys = require('./config/keys');
+
 const profileRoutes = require('./routes/profile-routes')
 
-
+require('dotenv').config()
+  
 const app = express();
 
 const port = process.env.PORT || 4000;
@@ -20,7 +21,7 @@ app.set('view engine', 'ejs');
 
 app.use(cookieSession({
     maxAge: 24*60*60*1000,
-    keys:[ keys.session.key]
+    keys:[ process.env.SESSION_KEY]
 }));
 
 //initialize passport
@@ -28,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //connect to mongodb
-mongoose.connect("mongodb://prince:prince123@ds153974.mlab.com:53974/userdata")
+mongoose.connect(process.env.MONGO_DB)
 .then(() => {
     console.log('Connencted to Mongodb mlab')})
 .catch(error => console.log(error))
